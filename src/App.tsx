@@ -97,7 +97,8 @@ class App extends React.Component<OwnProps & StateFromProps & DispatchFromProps,
     return (
       <Layout>
         <Header style={headerStyle}>
-          <h2>Magic JSON</h2>
+          <h1>Magic JSON</h1>
+          <h2 style={{ display: 'none' }}>Analyse your JSON with ease</h2>
 
           <Icon 
             type="setting"
