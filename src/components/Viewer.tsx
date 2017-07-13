@@ -40,7 +40,7 @@ interface DispatchFromProps {
 }
 
 class Viewer extends React.Component<OwnProps & StateFromProps & DispatchFromProps, void> {
-    parseObject = (object: any, stack: string = '') => {
+    parseObject = (object: {}, stack: string = '') => {
         for (let property in object) {
             if (object.hasOwnProperty(property)) {
                 // parsing of null
@@ -56,8 +56,8 @@ class Viewer extends React.Component<OwnProps & StateFromProps & DispatchFromPro
         }
     }
 
-    handleTitleChange = (e: React.FormEvent<any>) => {
-        this.props.handleTitleChange(this.props.tab, e.target['value']);
+    handleTitleChange = (e: React.FormEvent<HTMLInputElement>) => {
+        this.props.handleTitleChange(this.props.tab, e.currentTarget.value);
     }
 
     render() {

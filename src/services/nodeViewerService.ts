@@ -22,7 +22,7 @@ export default class NodeViewerService {
                 }
             }
         } else {
-            console.log(`Impossible to calculate size of property: ${node.property}`);
+            // Impossible to calculate size of property: ${node.property}
         }
 
         return 0;

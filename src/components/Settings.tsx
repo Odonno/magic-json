@@ -38,40 +38,46 @@ interface DispatchFromProps {
     handleColorLimitPercentRangeChange(index: number, min: number, max: number): void;
     handleColorLimitSizeColorChange(index: number, color: string): void;
     handleColorLimitSizeRangeChange(index: number, min: number, max: number): void;
-    handleColorLimitSizeFactorChange(index: number, factor: number, propertyType: 'min' | 'max'): void
+    handleColorLimitSizeFactorChange(index: number, factor: number, propertyType: 'min' | 'max'): void;
 }
 
 class Settings extends React.Component<OwnProps & StateFromProps & DispatchFromProps, void> {
-    handleColorLimitPercentColorChange = (e: React.FormEvent<any>, index: number) => {
-        this.props.handleColorLimitPercentColorChange(index, e.target['value']);
+    handleColorLimitPercentColorChange = (e: React.FormEvent<HTMLInputElement>, index: number) => {
+        this.props.handleColorLimitPercentColorChange(index, e.currentTarget.value);
     }
 
-    handleColorLimitPercentValueChange = (e: React.FormEvent<any>, propertyType: 'min' | 'max', index: number) => {
+    handleColorLimitPercentValueChange =
+    (e: React.FormEvent<HTMLInputElement>, propertyType: 'min' | 'max', index: number) => {
+        let targetValue = parseInt(e.currentTarget.value, 2);
+
         if (propertyType === 'min') {
             const currentMax = this.props.colorLimitsPercent[index].max;
-            this.props.handleColorLimitPercentRangeChange(index, e.target['value'], currentMax);
+            this.props.handleColorLimitPercentRangeChange(index, targetValue, currentMax);
         } else {
             const currentMin = this.props.colorLimitsPercent[index].min;
-            this.props.handleColorLimitPercentRangeChange(index, currentMin, e.target['value']);
+            this.props.handleColorLimitPercentRangeChange(index, currentMin, targetValue);
         }
     }
 
-    handleColorLimitSizeColorChange = (e: React.FormEvent<any>, index: number) => {
-        this.props.handleColorLimitSizeColorChange(index, e.target['value']);
+    handleColorLimitSizeColorChange = (e: React.FormEvent<HTMLInputElement>, index: number) => {
+        this.props.handleColorLimitSizeColorChange(index, e.currentTarget.value);
     }
 
-    handleColorLimitSizeValueChange = (e: React.FormEvent<any>, propertyType: 'min' | 'max', index: number) => {
+    handleColorLimitSizeValueChange = 
+    (e: React.FormEvent<HTMLInputElement>, propertyType: 'min' | 'max', index: number) => {
+        let targetValue = parseInt(e.currentTarget.value, 2);
+
         if (propertyType === 'min') {
             const currentMax = this.props.colorLimitsSize[index].max.value;
-            this.props.handleColorLimitSizeRangeChange(index, e.target['value'], currentMax);
+            this.props.handleColorLimitSizeRangeChange(index, targetValue, currentMax);
         } else {
             const currentMin = this.props.colorLimitsSize[index].min.value;
-            this.props.handleColorLimitSizeRangeChange(index, currentMin, e.target['value']);
+            this.props.handleColorLimitSizeRangeChange(index, currentMin, targetValue);
         }
     }
 
     handleColorLimitSizeFactorChange = (value: string, propertyType: 'min' | 'max', index: number) => {
-        this.props.handleColorLimitSizeFactorChange(index, parseInt(value), propertyType);
+        this.props.handleColorLimitSizeFactorChange(index, parseInt(value, 2), propertyType);
     }
 
     render() {
@@ -138,7 +144,7 @@ class Settings extends React.Component<OwnProps & StateFromProps & DispatchFromP
                                     placeholder="Min"
                                     value={cl.min.value}
                                     onChange={(e) => this.handleColorLimitSizeValueChange(e, 'min', index)} />
-                                <Select 
+                                <Select
                                     value={cl.min.factor.toString()}
                                     onChange={(value: string) => this.handleColorLimitSizeFactorChange(value, 'min', index)}>
                                     <Option value="0">B</Option>
@@ -154,7 +160,7 @@ class Settings extends React.Component<OwnProps & StateFromProps & DispatchFromP
                                     placeholder="Max"
                                     value={cl.max.value}
                                     onChange={(e) => this.handleColorLimitSizeValueChange(e, 'max', index)} />
-                                <Select 
+                                <Select
                                     value={cl.max.factor.toString()}
                                     onChange={(value: string) => this.handleColorLimitSizeFactorChange(value, 'max', index)}>
                                     <Option value="0">B</Option>

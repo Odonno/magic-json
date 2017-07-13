@@ -5,7 +5,7 @@ export default class JsonToNodesConverter {
         return this.convertFromObject(JSON.parse(json));
     }
 
-    private static convertFromObject(o: any): ViewerNode[] {
+    private static convertFromObject(o: {}): ViewerNode[] {
         return Object.keys(o).map(key => {
             let isObject = false;
             let isArray = false;

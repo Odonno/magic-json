@@ -13,7 +13,7 @@ import NodeViewerService from '../services/nodeViewerService';
 
 import { Tag } from 'antd';
 
-const lazyLoad: any = require('react-lazyload');
+const lazyLoad = require('react-lazyload');
 const LazyLoad = lazyLoad.default;
 
 type PropertySize = {
@@ -99,7 +99,9 @@ class Stats extends React.Component<OwnProps & StateFromProps & DispatchFromProp
                         // use settings to configure colors/limit
                         const colorLimitPercentSetting = this.props.colorLimitsPercent
                             .filter(cl => percent >= cl.min && percent <= cl.max)[0];
-                        const colorLimitPercentColor = colorLimitPercentSetting ? colorLimitPercentSetting.color : 'black';
+                        const colorLimitPercentColor = colorLimitPercentSetting ?
+                            colorLimitPercentSetting.color :
+                            'black';
 
                         const colorLimitSizeSetting = this.props.colorLimitsSize
                             .filter(cl => {
@@ -114,10 +116,18 @@ class Stats extends React.Component<OwnProps & StateFromProps & DispatchFromProp
                                     <span style={{ display: 'inline-block' }}>
                                         <strong>{spp.key} </strong>
                                         {this.props.showColorLimitsSize &&
-                                            <Tag color={colorLimitSizeColor}>{SizeToStringConverter.convert(spp.size)}</Tag>
+                                            (
+                                                <Tag color={colorLimitSizeColor}>
+                                                    {SizeToStringConverter.convert(spp.size)}
+                                                </Tag>
+                                            )
                                         }
                                         {this.props.showColorLimitsPercent &&
-                                            <Tag color={colorLimitPercentColor}>{percent.toFixed(2) + '%'}</Tag>
+                                            (
+                                                <Tag color={colorLimitPercentColor}>
+                                                    {percent.toFixed(2) + '%'}
+                                                </Tag>
+                                            )
                                         }
                                     </span>
                                 </div>

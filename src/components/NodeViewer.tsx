@@ -13,7 +13,7 @@ import NodeViewerService from '../services/nodeViewerService';
 
 import { Icon, Tag } from 'antd';
 
-const lazyLoad: any = require('react-lazyload');
+const lazyLoad = require('react-lazyload');
 const LazyLoad = lazyLoad.default;
 
 const expanderStyle = {
@@ -86,7 +86,7 @@ class NodeViewer extends React.Component<OwnProps & StateFromProps & DispatchFro
                 canUseOpenButton = true;
             }
         } else {
-            console.log(`Impossible to use property: ${this.props.node.property}`);
+            // Impossible to use property: ${this.props.node.property}
         }
 
         let nodes: JSX.Element[] = [];
@@ -138,11 +138,9 @@ class NodeViewer extends React.Component<OwnProps & StateFromProps & DispatchFro
                 </span>
 
                 <span style={{ display: 'inline-block' }}>
-                    <strong> {this.props.node.property}</strong>
-                    <span>:</span>
-                    <span> </span>
-                    <span>{displayValue}</span>
-                    <span> </span>
+                    <strong>{this.props.node.property}</strong>
+                    <span>: </span>
+                    <span>{displayValue} </span>
                     {this.props.showColorLimitsSize &&
                         <Tag color={colorLimitSizeColor}>{SizeToStringConverter.convert(size)}</Tag>
                     }

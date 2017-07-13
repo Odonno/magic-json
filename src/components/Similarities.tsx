@@ -15,7 +15,7 @@ import NodeViewerService from '../services/nodeViewerService';
 
 import { Tag } from 'antd';
 
-const lazyLoad: any = require('react-lazyload');
+const lazyLoad = require('react-lazyload');
 const LazyLoad = lazyLoad.default;
 
 const nodesStyle = {
@@ -73,12 +73,14 @@ class Similarities extends React.Component<OwnProps & StateFromProps & DispatchF
                 }
 
                 for (let key in Object.keys(node1.value)) {
-                    if (!node2.value[key]) {
-                        return false;
-                    }
+                    if (node1.value.hasOwnProperty(key)) {
+                        if (!node2.value[key]) {
+                            return false;
+                        }
 
-                    if (!this.areNodesEquals(node1.value[key], node2.value[key])) {
-                        return false;
+                        if (!this.areNodesEquals(node1.value[key], node2.value[key])) {
+                            return false;
+                        }
                     }
                 }
             } else {
@@ -118,7 +120,7 @@ class Similarities extends React.Component<OwnProps & StateFromProps & DispatchF
                 }
             }
         }
-        
+
         const nodeSimilarGroups: NodeSimilarGroup[] = [];
 
         linkedNodesIndex
