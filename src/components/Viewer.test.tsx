@@ -27,7 +27,9 @@ it('renders without crashing', () => {
       }
     ],
     settings: {
-      removeNullProperties: false
+      removeNullProperties: false,
+      showStatsBlock: false,
+      showNodesSimilaritiesBlock: false
     }
   };
 

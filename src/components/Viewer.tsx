@@ -4,7 +4,13 @@ import * as React from 'react';
 
 import * as State from '../state';
 
-import { updateTitle, toggleRemoveNullProperties, removeTab } from '../actions/content';
+import {
+    updateTitle,
+    toggleRemoveNullProperties, 
+    removeTab,
+    toggleShowStatsBlock,
+    toggleShowNodesSimilaritiesBlock
+} from '../actions/content';
 
 import { ViewerTab } from '../models/Viewer';
 
@@ -29,6 +35,8 @@ interface DispatchFromProps {
     handleTitleChange(tab: ViewerTab, title: string): void;
     handleRemoveNullPropertiesChange(tab: ViewerTab): void;
     handleRemoveTabClick(tab: ViewerTab): void;
+    handleShowStatsBlockChange(tab: ViewerTab): void;
+    handleShowNodesSimilaritiesBlockChange(tab: ViewerTab): void;
 }
 
 class Viewer extends React.Component<OwnProps & StateFromProps & DispatchFromProps, void> {
@@ -72,7 +80,19 @@ class Viewer extends React.Component<OwnProps & StateFromProps & DispatchFromPro
                     checked={this.props.tab.settings.removeNullProperties}
                     onChange={() => this.props.handleRemoveNullPropertiesChange(this.props.tab)}>
                     Remove null properties
-                 </Checkbox>
+                </Checkbox>
+                <br />
+                <Checkbox
+                    checked={this.props.tab.settings.showStatsBlock}
+                    onChange={() => this.props.handleShowStatsBlockChange(this.props.tab)}>
+                    Show stats block
+                </Checkbox>
+                <br />
+                <Checkbox
+                    checked={this.props.tab.settings.showNodesSimilaritiesBlock}
+                    onChange={() => this.props.handleShowNodesSimilaritiesBlockChange(this.props.tab)}>
+                    Show nodes similarities block
+                </Checkbox>
                 <br />
                 <Button type="danger" onClick={() => this.props.handleRemoveTabClick(this.props.tab)}>
                     Remove pane
@@ -84,19 +104,31 @@ class Viewer extends React.Component<OwnProps & StateFromProps & DispatchFromPro
                     .map(node => {
                         return (
                             <NodeViewer
-                                key={node.property} 
-                                node={node} 
+                                key={node.property}
+                                node={node}
                                 parentSize={parentSize}
                                 removeNullProperties={this.props.tab.settings.removeNullProperties} />
                         );
                     })
                 }
 
-                <h4>Stats (size per property)</h4>
-                <Stats tab={this.props.tab} />
+                {this.props.tab.settings.showStatsBlock &&
+                    (
+                        <div>
+                            <h4>Stats (size per property)</h4>
+                            <Stats tab={this.props.tab} />
+                        </div>
+                    )
+                }
 
-                <h4>Nodes similarities (objects)</h4>
-                <Similarities tab={this.props.tab} />
+                {this.props.tab.settings.showNodesSimilaritiesBlock &&
+                    (
+                        <div>
+                            <h4>Nodes similarities (objects)</h4>
+                            <Similarities tab={this.props.tab} />
+                        </div>
+                    )
+                }
             </div>
         );
     }
@@ -115,6 +147,12 @@ const mapDispatchToProps = (dispatch: Dispatch<State.Root>): DispatchFromProps =
     },
     handleRemoveTabClick: (tab: ViewerTab) => {
         dispatch(removeTab(tab));
+    },
+    handleShowStatsBlockChange: (tab: ViewerTab) => {
+        dispatch(toggleShowStatsBlock(tab));
+    },
+    handleShowNodesSimilaritiesBlockChange: (tab: ViewerTab) => {
+        dispatch(toggleShowNodesSimilaritiesBlock(tab));
     }
 });
 

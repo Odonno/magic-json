@@ -7,6 +7,8 @@ export class ViewerTab {
     nodes: ViewerNode[];
     settings: {
         removeNullProperties: boolean;
+        showStatsBlock: boolean;
+        showNodesSimilaritiesBlock: boolean;
     };
 }
 

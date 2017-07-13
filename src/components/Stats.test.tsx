@@ -12,7 +12,9 @@ it('renders without crashing', () => {
     isArray: false,
     nodes: [],
     settings: {
-      removeNullProperties: false
+      removeNullProperties: false,
+      showStatsBlock: false,
+      showNodesSimilaritiesBlock: false
     }
   };
 

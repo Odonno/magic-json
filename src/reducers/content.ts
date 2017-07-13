@@ -32,7 +32,9 @@ export const initialState: State.Content = {
                 }
             ],
             settings: {
-                removeNullProperties: false
+                removeNullProperties: false,
+                showStatsBlock: false,
+                showNodesSimilaritiesBlock: false
             }
         }
     ]
@@ -76,7 +78,9 @@ export const reducer = (state: State.Content = initialState, action: Action): St
                 isArray,
                 nodes: rootNodes,
                 settings: {
-                    removeNullProperties: false
+                    removeNullProperties: false,
+                    showStatsBlock: false,
+                    showNodesSimilaritiesBlock: false
                 }
             };
 
@@ -123,6 +127,42 @@ export const reducer = (state: State.Content = initialState, action: Action): St
             return {
                 ...state,
                 tabs: state.tabs.filter(tab => tab.key !== action.tab.key)
+            };
+
+        case Actions.TOGGLE_SHOW_STATS_BLOCK:
+            return {
+                ...state,
+                tabs: state.tabs.map(tab => {
+                    if (tab.key === action.tab.key) {
+                        return {
+                            ...tab,
+                            settings: {
+                                ...tab.settings,
+                                showStatsBlock: !tab.settings.showStatsBlock
+                            }
+                        };
+                    }
+
+                    return tab;
+                })
+            };
+
+        case Actions.TOGGLE_SHOW_NODES_SIMILARITIES_BLOCK:
+            return {
+                ...state,
+                tabs: state.tabs.map(tab => {
+                    if (tab.key === action.tab.key) {
+                        return {
+                            ...tab,
+                            settings: {
+                                ...tab.settings,
+                                showNodesSimilaritiesBlock: !tab.settings.showNodesSimilaritiesBlock
+                            }
+                        };
+                    }
+
+                    return tab;
+                })
             };
 
         default: return state;
